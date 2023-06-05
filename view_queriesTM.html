@@ -1,0 +1,99 @@
+{% include 'team_member/dashboard.html' %}
+
+{% block content %}
+
+
+<html>
+<head>
+    <style type="text/css">
+		table {
+			border-collapse: unset;
+			width: 83%;
+			margin-left: 16%;
+			margin-top: 4%;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+			padding: 10px;
+			text-align:center;
+			font-variant-caps: small-caps;
+
+		}
+
+		tr:hover {
+			background-color: #f5f5f5;
+			width: 10px;
+		}
+
+		th {
+			background-color: #05091a;
+			color: white;
+		}
+		         .heading{
+           margin-left:18%;
+           margin-top:1%;
+            font-size: 25px;
+            font-weight: 600;
+            background-image: linear-gradient(to left, #553c9a, #b393d3);
+            color: transparent;
+            background-clip: text;
+           -webkit-background-clip: text;
+        }
+        .statusp{
+          font-weight:bold;
+          color:tomato;
+
+        }
+        .statusc{
+          font-weight:bold;
+          color:springgreen;
+
+        }
+    </style>
+</head>
+<body>
+<h3 class="heading">QUERY DETAILS</h3>
+<table>
+    <thead class="bg-light">
+    <tr>
+        <th scope="col">Query</th>
+        <th scope="col">Project Manager</th>
+        <th scope="col">Team Member</th>
+        <th scope="col">Status</th>
+        <th scope="col">Solution</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% if query_info %}
+    {% for i in query_info %}
+    <tr>
+        <td>{{i.query}}</td>
+        <td>{{i.project_manager.fullname}}</td>
+        <td>{{i.team_member.fullname}}</td>
+        {% if i.status == 'pending'%}
+        <td class="statusp">{{i.status}}</td>
+        {%else%}
+        <td class="statusc">{{i.status}}</td>
+        {%endif%}
+        {% if i.remarks %}
+        <td class="statusc">{{ i.remarks }}</td>
+        {% else %}
+        <td class="statusp">No Solutions Yet</td>
+        {% endif %}
+    </tr>
+    {% endfor%}
+    {% else %}
+    <tr>
+        <td colspan="9">No data found</td>
+    </tr>
+    {% endif %}
+    </tbody>
+</table>
+</body>
+</html>
+
+{% endblock content%}

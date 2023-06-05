@@ -1,0 +1,110 @@
+{% include 'project_manager/dashboard.html' %}
+
+{% block content %}
+
+<html>
+<head>
+    <title>Table View Template</title>
+    <style type="text/css">
+		table {
+			border-collapse: unset;
+			width: 82%;
+			margin-left: 16%;
+			margin-top: 4%;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+			padding: 4px;
+			font-variant-caps: small-caps;
+
+		}
+
+		tr:hover {
+			background-color: #f5f5f5;
+			width: 10px;
+		}
+
+		th {
+			background-color: #05091a;
+			color: white;
+		}
+		  .heading{
+           margin-left:50%;
+           margin-top:1%;
+            font-size: 20px;
+            font-weight: 1000;
+            background-image: linear-gradient(to left, #130b28, #29163d);
+            color: transparent;
+            background-clip: text;
+           -webkit-background-clip: text;
+
+
+        }
+
+
+    </style>
+</head>
+<body>
+<h3 class="heading">TEAM MEMBERS LIST</h3>
+<table>
+    <thead class="bg-light">
+    <tr>
+        <th>Details</th>
+        <th scope="col">Contact Number</th>
+        <th scope="col">Status</th>
+        <th scope="col">Assigned Project </th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in team_d%}
+    <tr>
+        <td>
+            <div class="d-flex align-items-center">
+                <img
+                        src="{{i.image.url}}"
+                        alt=""
+                        style="width: 45px; height: 45px"
+                        class="rounded-circle"/>
+                <div class="ms-3">
+                    <p class="fw-bold mb-1">{{i.fullname}}</p>
+                    <p class="text-muted mb-0">{{i.email}}</p>
+                </div>
+            </div>
+        </td>
+        <td>
+            <p class="fw-normal mb-1">{{i.phone}}</p>
+        </td>
+        {% if i.status == 'active' %}
+        <td>
+            <span class="badge badge-success rounded-pill d-inline">{{i.status}}</span>
+        </td>
+        {% else %}
+        <td>
+            <span class="badge badge-danger rounded-pill d-inline">{{i.status}}</span>
+        </td>
+        {% endif %}
+        <td>
+            {% for task in i.task_info_set.all %}
+            {{ task.project_details.p_name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+            Not Assigned
+            {% endfor %}
+        </td>
+        <td>&nbsp;<a class="fa fa-edit" href="{% url 'edit_teammember' i.id %}"></a>&nbsp;&nbsp;&nbsp;&nbsp; <a
+                class="fa fa-trash" href="{% url 'delete_teammember' i.id%}"></a>
+        </td>
+
+    </tr>
+
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
+
+
+{% endblock content%}

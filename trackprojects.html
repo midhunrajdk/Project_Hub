@@ -1,0 +1,202 @@
+{% include 'project_manager/dashboard.html'%}
+
+{% block content%}
+
+
+<style type="text/css">
+		.container {
+			max-width: 60%;
+			height: 503px;
+			margin: 0 auto;
+			padding: 20px;
+			border: ridge;
+			margin-left: 240px;
+			margin-top: 19px;
+			border-radius: 37px;
+			border-color: #05091a;
+			background-color: #05091a;
+
+		}
+
+		h1 {
+			font-size: 32px;
+			margin-bottom: 20px;
+			color: tomato;
+			    font-variant-caps: small-caps;
+		}
+
+		.project-details {
+			display: flex;
+			flex-direction: column;
+			margin-bottom: 20px;
+		}
+
+		.project-details .field {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin-bottom: 10px;
+		}
+
+		.project-details .field .label {
+			width: 150px;
+			font-weight: bold;
+			    font-variant-caps: small-caps;
+		}
+
+		.project-details .field .value {
+			flex: 1;
+		}
+
+		a {
+			color: #007bff;
+			text-decoration: none;
+		}
+
+		a:hover {
+			text-decoration: underline;
+		}
+		.status{
+		font-weight:bold;
+	    font-variant-caps: all-small-caps;
+	    color: springgreen;
+	    font-size:17px;
+	    font-variant-caps: small-caps;
+
+		}
+		.sdate{
+		font-weight:bold;
+		color: darkgreen;
+		font-variant-caps: small-caps;
+		}
+		.edate{
+		font-weight:bold;
+		color: #cb0c3c;
+	    font-variant-caps: small-caps;
+		}
+		.members{
+		font-weight:bold;
+        font-variant: all-small-caps;
+        font-size:20px;
+		}
+		.team{
+		font-weight:bold;
+        font-variant: all-small-caps;
+        font-size:25px;
+        color: #cabd0e;
+		}
+		.containers {
+			max-width: 40%;
+			margin: 0 auto;
+			padding: 20px;
+			border: ridge;
+			margin-left: 412px;
+			margin-top: -768px;
+			border-radius: 37px;
+			border-color: #05091a;
+			background-color: #05091a;
+
+		}
+        .pdf-button{
+        margin-left:255px;
+        margin-top:-85px;
+          position: relative;
+  background-color: #30086b;
+  border: none;
+  font-size: 12px;
+  font-variant: small-caps;
+  font-weight:bolder;
+  border-radius:8px;
+  color: #FFFFFF;
+  padding: 8px;
+  width: 156px;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+        }
+  a:hover {
+        text-decoration: none;
+    }
+        .mail-sent {
+        background-color: green !important;
+    }
+
+
+
+
+
+</style>
+
+    {% for i in project_d %}
+
+<div class="container">
+    <h1>{{i.p_name}}</h1>
+    <div class="project-details">
+        <div class="field">
+            <div class="label">Name:</div>
+            <div class="value">{{i.p_name}}</div>
+        </div>
+
+        <div class="field">
+            <div class="label">Start Date:</div>
+            <div class="sdate">{{i.s_date}}</div>
+        </div>
+        <div class="field">
+            <div class="label">End Date:</div>
+            <div class="edate">{{i.e_date}}</div>
+        </div>
+        <div class="field">
+            <div class="label">Front end:</div>
+            <div class="value">{{i.f_end}}</div>
+        </div>
+        <div class="field">
+            <div class="label">Back end:</div>
+            <div class="value">{{i.b_end}}</div>
+        </div>
+        <div class="field">
+            <div class="label">Database:</div>
+            <div class="value">{{i.d_base}}</div>
+        </div>
+        <div class="field">
+            <div class="label">Client Name:</div>
+            <div class="value">{{i.c_name}}</div>
+        </div>
+        <div class="field">
+            <div class="label">Client Email</div>
+            <div class="value">{{i.c_email}}</div>
+        </div>
+        <div class="field">
+            <div class="label">Client Phone:</div>
+            <div class="value">{{i.c_phone}}</div>
+        </div>
+        <div class="field">
+            <div class="label">Project Status:</div>
+            <div class=" status  ">{{i.status}}</div>
+        </div>
+        <div class="field">
+            <div class="label">Project Stage:</div>
+            <div class=" status">{{i.stage}}</div>
+        </div>
+        {% if i.stage == 'deployed' %}
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <a href="{% url 'generate_report' i.id %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div>
+        {% endif %}
+    </div>
+</div>
+ {% endfor %}
+<!--
+    {% for i in team_member %}
+        <div class="">
+            <div class="team">Team Members</div>
+
+            <div class="field">
+                <div class=" members">{{i.fullname}}</div>
+            </div>
+            {% endfor%}
+        </div> -->
+
+{% endblock content%}

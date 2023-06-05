@@ -1,0 +1,107 @@
+{% include 'project_manager/dashboard.html' %}
+
+{% block content %}
+
+<html>
+<head>
+    <title>Task Proress</title>
+    <style type="text/css">
+		table {
+			border-collapse: collapse;
+			width: 82%;
+			margin-left: 16%;
+			margin-top: 4%;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+			padding: 10px;
+            font-variant-caps: small-caps;
+		}
+
+		tr:hover {
+			background-color: #1f2939!;
+			width: 10px;
+		}
+
+		th {
+			background-color: #05091a;
+			color: white;
+			}
+		  .assigned{
+        font-weight:bold;
+        font-variant-caps: small-caps;
+        color: #16e52a;
+        }
+        a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+        .mail-sent {
+        background-color: green !important;
+    }
+
+
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Apply the button state from local storage to each button in the table
+        $("table").on("click", ".send-mail-button", function() {
+            $(this).addClass("mail-sent");
+            var id = $(this).data("id");
+            localStorage.setItem("mailSent-" + id, "true");
+        });
+
+        // Retrieve and apply the button state from local storage for each button in the table
+        $("table").find(".send-mail-button").each(function() {
+            var id = $(this).data("id");
+            if (localStorage.getItem("mailSent-" + id)) {
+                $(this).addClass("mail-sent");
+            }
+        });
+    });
+</script>
+
+</head>
+<body>
+<table>
+    <thead class="bg-light">
+    <tr>
+        <th scope="col">Task Name</th>
+        <th scope="col">Updated Date</th>
+        <th scope="col">Issues</th>
+        <th scope="col">Report</th>
+        <th scope="col">Status</th>
+        <th scope="col">Send Mail</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if task_up %}
+    {% for i in task_up %}
+    <tr>
+        <td>{{i.task_info.task_name}}</td>
+        <td>{{i.date_update}}</td>
+        <td>{{i.issue}}</td>
+        <td><a href="{{ i.report.url }}">View report</a></td>
+        <td><a href="{% url 'view_assignedtask'%}">{{i.status}}</a></td>
+        <td><a class="btn btn-sm 	fa fa-envelope send-mail-button{% if i.id in mail_sent %} mail-sent{% endif %}" href="{% url 'sendmail' i.id  %}" data-id="{{ i.id }}"><br>Mail</a></td>
+
+    </tr>
+    {% endfor%}
+    {% else %}
+    <tr>
+        <td colspan="10">No data found</td>
+    </tr>
+    {% endif %}
+    </tbody>
+</table>
+</body>
+</html>
+{% endblock content%}

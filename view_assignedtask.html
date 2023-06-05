@@ -1,0 +1,192 @@
+{% include 'project_manager/dashboard.html' %}
+
+{% block content %}
+
+<html>
+<head>
+    <title>Table View Template</title>
+    <style type="text/css">
+		table {
+			border-collapse: collapse;
+			width: 82%;
+			margin-left: 16%;
+			margin-top: 4%;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+			padding: 10px;
+			text-align:center;
+			padding:10px;
+			font-variant-caps: small-caps;
+
+		}
+
+		tr:hover {
+			background-color: #1f2939!;
+			width: 10px;
+		}
+
+		th {
+			background-color: #05091a;
+			color: white;
+            }
+        .status-com{
+        font-weight:bold;
+        font-variant-caps: small-caps;
+        color: #16e52a;
+        }
+        .status-pen{
+        font-weight:bold;
+        font-variant-caps: small-caps;
+        color: #dc1e4a;
+        }
+        .assigned{
+        font-weight:bold;
+        font-variant-caps: small-caps;
+        color: #16e52a;
+        }
+        .s-date{
+        font-weight:bold;
+        font-variant-caps: small-caps;
+        color: #2dca21;
+        }
+         .e-date{
+        font-weight:bold;
+        font-variant-caps: small-caps;
+        color: #dc1e4a;
+        }
+          a {
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+
+
+
+
+       .height{
+        height: 15vh;
+       }
+
+
+       .search{
+       position: relative;
+       box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+
+       }
+
+       .search input{
+
+        height: 60px;
+        text-indent: 25px;
+        border: 2px solid #d6d4d4;
+
+
+       }
+
+
+       .search input:focus{
+
+        box-shadow: none;
+        border: 2px solid blue;
+
+
+       }
+
+       .search .fa-search{
+
+        position: absolute;
+        top: 20px;
+        left: 16px;
+
+       }
+
+       .search button{
+
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        height: 50px;
+        width: 110px;
+        background: blue;
+
+       }
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row height d-flex justify-content-center align-items-center">
+        <div class="col-md-8">
+            <div class="search">
+                <i class="fa fa-search"></i>
+                <form method="GET" action="">
+                    <input type="text" class="form-control" name="search_query" placeholder="Search Here">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table>
+    <thead class="bg-light">
+    <tr>
+        <th scope="col">Task Name</th>
+        <th class="desc">Task Description</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Project</th>
+        <th scope="col">Assigned To</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if task_d %}
+    {% for i in task_d %}
+    <tr>
+        <td>{{ i.task_name }}</td>
+        <td>{{ i.task_desc }}</td>
+        <td>{{ i.task_prior }}</td>
+        <td class="s-date">{{ i.s_date }}</td>
+        <td class="e-date">{{ i.e_date }}</td>
+        {% if i.status == 'pending' %}
+        <td class="status-pen">
+            <a href="{% url 'update_taskstatus' i.id %}">{{ i.status }}</a>
+        </td>
+        {% else %}
+        <td class="status-com">
+            <a href="{% url 'view_task_progress' %}">{{ i.status }}</a>
+        </td>
+        {% endif %}
+        <td>{{ i.project_details.p_name }}</td>
+        <td class="assigned">{{ i.team_member.fullname }}</td>
+        <td>
+            <a class="fa fa-edit" href="{% url 'edit_assigned_task' i.id %}"></a>
+            &nbsp;&nbsp;
+            <a class="fa fa-trash" href="{% url 'delete_assigned_task' i.id %}"></a>
+        </td>
+    </tr>
+    {% endfor %}
+    {% else %}
+    <tr>
+        <td colspan="9">No data found</td>
+    </tr>
+    {% endif %}
+    </tbody>
+</table>
+</body>
+</html>
+{% endblock content%}

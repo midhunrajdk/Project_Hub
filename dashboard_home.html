@@ -1,0 +1,109 @@
+{% include 'team_member/dashboard.html' %}
+
+{% block content %}
+
+<style>
+        .dashboard{
+            margin-left: 18%;
+            margin-top: 2%;
+            display: flex;
+        }
+        .newtask{
+            font-size:20px;
+            border-radius: 45px;
+            text-align: center;
+            background-color: #e2b031;
+            border-bottom-style: ridge;
+            border-width:3px;
+        }
+
+
+
+
+</style>
+
+<div class="container-fluid">
+    <div class="dashboard">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                TOTAL TASKS
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_t }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                COMPLETED TASKS
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ comp_t }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa fa-handshake-o fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                PENDING APPROVED TASKS
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pen_t }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="{% url 'update_task' %}">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    NEW TASK
+                                </div>
+
+                                <div class="newtask mb-0 font-weight-bold text-gray-800">{{ t_count }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa fa fa-plus-square fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Earnings (Monthly) Card Example -->
+    </div>
+</div>
+
+
+
+{% endblock content %}

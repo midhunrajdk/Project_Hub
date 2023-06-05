@@ -1,0 +1,205 @@
+{% include 'project_manager/dashboard.html' %}
+
+{% block content %}
+
+
+<html>
+<head>
+    <title>Table View Template</title>
+    <style type="text/css">
+		table {
+			border-collapse: unset;
+			width: 83%;
+			margin-left: 16%;
+			margin-top: 4%;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+			padding: 10px;
+			text-align:center;
+			font-variant-caps: small-caps;
+
+		}
+
+		tr:hover {
+			background-color: #f5f5f5;
+			width: 10px;
+		}
+
+		th {
+			background-color: #05091a;
+			color: white;
+		}
+
+       .dashboard{
+            margin-left: 18%;
+            margin-top: 2%;
+            display: flex;
+        }
+        .linetwo{
+           margin-left:18%;
+           margin-top:2%;
+           display:flex;
+
+        }
+         .heading{
+           margin-left:18%;
+           margin-top:1%;
+            font-size: 15px;
+            font-weight: 600;
+            background-image: linear-gradient(to left, #2a196a, #1a1553)
+            color: transparent;
+            background-clip: text;
+           -webkit-background-clip: text;
+
+
+        }
+.approved{
+    color: #37df6c;
+    font-weight: 900;
+}
+.pending{
+    color: #df374e;
+    font-weight:900;
+}
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<h3 class="heading">PROJECT DETAILS</h3>
+<div class="container-fluid">
+    <div class="dashboard">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                TOTAL PROJECTS
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ p_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                APPROVED PROJECTS
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ app_p }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa fa-handshake-o fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Pending Requests Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                PENDING PROJECTS
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ pen_p }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa fa-hourglass-half fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">COMPLETED PROJECTS
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ com_p }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa fa fa-thumbs-up fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table>
+        <thead class="bg-light">
+        <tr>
+            <th scope="col">Project Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Approval</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% if project_d %}
+        {% for i in project_d %}
+        <tr>
+            <td>{{i.p_name}}</td>
+            <td>{{i.p_desc}}</td>
+            {% if i.status == 'pending' %}
+            <td class="pending">Pending</td>
+            {% else %}
+            <td class="approved">Approved</td>
+            {% endif %}
+            {% if i.stage == 'deployed' %}
+            <td class="approved">Completed</td>
+            {% else %}
+            <td class="pending">Pending</td>
+            {% endif %}
+            <td><a class="fa fa-edit" href="{% url 'edit_project' i.id %}"></a>&nbsp;&nbsp; <a class="fa fa-trash"
+                                                                                               href="{% url 'delete_project' i.id %}"></a>
+            </td>
+            <td></td>
+        </tr>
+        {% endfor%}
+        {% else %}
+        <tr>
+            <td colspan="9">No data found</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</body>
+</html>
+
+{% endblock content%}

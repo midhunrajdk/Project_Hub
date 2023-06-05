@@ -1,0 +1,81 @@
+{% include 'team_member/dashboard.html' %}
+
+{% block content %}
+
+
+<html>
+<head>
+    <title>Table View Template</title>
+    <style type="text/css">
+		table {
+			border-collapse: unset;
+			width: 83%;
+			margin-left: 16%;
+			margin-top: 4%;
+		}
+
+		th, td {
+			text-align: left;
+			padding: 8px;
+			border-bottom: 1px solid #ddd;
+			padding: 10px;
+			text-align:center;
+			font-variant-caps: small-caps;
+
+		}
+
+		tr:hover {
+			background-color: #f5f5f5;
+			width: 10px;
+		}
+
+		th {
+			background-color: #05091a;
+			color: white;
+		}
+.deployed-stage{
+    color: #37df6c;
+    font-weight: 900;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<table>
+    <thead class="bg-light">
+    <tr>
+        <th scope="col">Project Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Stage</th>
+        <th scope="col">Project Manager</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% if project_d %}
+    {% for i in project_d %}
+    <tr>
+        <td>{{i.p_name}}</td>
+        <td>{{i.p_desc}}</td>
+        {% if i.stage == 'deployed' %}
+        <td class="deployed-stage">{{i.stage}}</td>
+        {% else %}
+         <td>{{i.stage}}</td>
+        {% endif %}
+        <td>{{i.project_manager.fullname}}</td>
+    </tr>
+    {% endfor%}
+    {% else %}
+    <tr>
+        <td colspan="9">No data found</td>
+    </tr>
+{% endif %}
+    </tbody>
+</table>
+</body>
+</html>
+
+{% endblock content%}
